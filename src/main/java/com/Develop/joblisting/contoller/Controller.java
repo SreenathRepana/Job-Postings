@@ -2,6 +2,7 @@ package com.Develop.joblisting.contoller;
 
 import com.Develop.joblisting.entity.Entity;
 import com.Develop.joblisting.repository.Repository;
+import com.Develop.joblisting.service.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
@@ -15,6 +16,8 @@ public class Controller {
 
     @Autowired
     private Repository repository;
+    @Autowired
+    private Service service;
 
     @ApiIgnore
     @RequestMapping("/")
@@ -25,6 +28,11 @@ public class Controller {
     @GetMapping("/allPosts")
     public List<Entity> getAllProperties(){
     return repository.findAll();
+    }
+
+    @GetMapping("/allposts/{text}")
+    public List<Entity> search(@PathVariable String text){
+        return service.searchByText(text);
     }
 
     @PostMapping("/addPost")
